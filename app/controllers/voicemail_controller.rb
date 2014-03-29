@@ -1,0 +1,2 @@
+class VoicemailController < ApplicationController
+end
