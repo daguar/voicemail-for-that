@@ -3,6 +3,7 @@ class VoicemailController < ApplicationController
     render action: 'prompt.xml.builder', layout: false
   end
 
-  def route
+  def router
+    render action: 'router.xml.builder', layout: false
   end
 end
