@@ -22,8 +22,8 @@ describe VoicemailController do
         gather_hash
       }
 
-      it 'sends user input to /route' do
-        expect(gather_hash['action']).to eq('/route')
+      it 'sends user input to /router' do
+        expect(gather_hash['action']).to eq('/router')
       end
 
       it 'times out after 5 seconds' do
