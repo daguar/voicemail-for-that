@@ -2,11 +2,11 @@
 
 Anthropomorphizing inanimate objects by providing them a voicemail that people can call.
 
-## Usage
+## Setup
 
-To use the app for your own purposes, you need a voice file, a server (or something like Heroku) to run the Rails app, and a Twilio account.
+To use the app, you'll need a welcome voicemail file, a server (or something like Heroku) to run the Rails app, and a Twilio account.
 
-### Voice File
+### The Welcome Voicemail File
 
 Record a voice file in the persona of the inanimate object you're providing a voicemail for. Make sure you mention two things:
 
@@ -28,12 +28,26 @@ Here are example instructions for Heroku.
 ```bash
 heroku create your-app-name-here
 git push heroku master
-
+heroku run rake db:migrate
 ```
 
+### Twilio Setup
 
-### Twilio Account
+This app runs on the excellent [Twilio](https://www.twilio.com/) telephony API service.
 
+Here are the steps to set up Twilio:
 
+1. Buy a phone number
+2. Set the Voice Request URL for your phone number (found on Twilio's site at Account > Numbers, then clicking your phone number.) You want to set the Request URL to your application's URL with `/prompt` at the end. For example: `http://my-app-name.herokuapp.com/prompt`
+
+### Leaving The First Message
+
+Lastly, you should call in and press '1' at the prompt, and leave the first message. (This is because if the first person to call in tries to listen to messages and there are none yet, they will get an error.)
+
+It's also a good idea to use this to set the tone you want the conversation to have (jovial? serious? political?)
+
+## Questions
+
+Hit me up on Twitter at [@allafarce](https://twitter.com/allafarce)
 
 Copyright 2014 Dave Guarino
