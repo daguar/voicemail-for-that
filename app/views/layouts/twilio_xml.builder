@@ -1,4 +1,4 @@
 xml.instruct!
 xml.Response do
-  # Play a random voice file
+  xml << yield
 end
