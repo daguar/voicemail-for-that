@@ -40,6 +40,10 @@ Here are the steps to set up Twilio:
 1. Buy a phone number
 2. Set the Voice Request URL for your phone number (found on Twilio's site at Account > Numbers, then clicking your phone number.) You want to set the Request URL to your application's URL with `/prompt` at the end. For example: `http://my-app-name.herokuapp.com/prompt`
 
+#### Twilio Cost Note
+
+Remember, Twilio is a service which costs money! It's pretty cheap ($1/month per phone number, 1 cent per call minute) but it could add up. It's up to you to make sure you're not losing tons of money.
+
 ### Leaving The First Message
 
 Lastly, you should call in and press '1' at the prompt, and leave the first message. (This is because if the first person to call in tries to listen to messages and there are none yet, they will get an error.)
