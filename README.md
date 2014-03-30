@@ -50,4 +50,4 @@ It's also a good idea to use this to set the tone you want the conversation to h
 
 Hit me up on Twitter at [@allafarce](https://twitter.com/allafarce)
 
-Copyright 2014 Dave Guarino
+Copyright 2014 Dave Guarino, MIT License
