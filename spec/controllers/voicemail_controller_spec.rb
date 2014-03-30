@@ -64,14 +64,27 @@ describe VoicemailController do
     end
 
     context 'user pressed 2' do
-    # => redirect to voicemail playback
       before do
         make_request({'Digits' => '2'})
       end
 
       it 'redirects to listening to voicemails' do
-        expect(response.body).to redirect_twilio_to(voicemails_path)
+        expect(response.body).to redirect_twilio_to('/voicemails/random')
       end
     end
+  end
+
+  describe 'GET /voicemails/random' do
+    before { get :random }
+
+    it 'is successful' do
+      expect(response).to be_successful
+    end
+  end
+
+  describe 'GET /voicemails/new' do
+  end
+
+  describe 'POST /voicemail/create' do
   end
 end
