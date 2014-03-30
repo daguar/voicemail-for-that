@@ -11,6 +11,9 @@ class VoicemailController < ApplicationController
   end
 
   def create
+    if params['RecordingDuration'].to_i > 2
+      @vm_saved = Voicemail.create(url: params['RecordingUrl'])
+    end
   end
 
   def random

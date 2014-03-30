@@ -125,12 +125,67 @@ describe VoicemailController do
     end
   end
 
-  describe 'POST /voicemail/create' do
-    # Save recording, say "message saved. playing back other voicemail"
-    before { post :create }
+  describe 'POST /voicemail' do
+    def make_request(params = {})
+      post :create, params
+    end
 
-    it 'is successful' do
-      expect(response).to be_successful
+    let(:recording_url) { 'http://fakeurl' }
+
+    let(:response_hash) { Hash.from_xml(response.body) }
+
+    context 'valid voicemail recording' do
+      let(:valid_voice_recording_params) {
+        {'RecordingUrl' => recording_url, 'RecordingDuration' => '30', 'Digits' => '1'}
+      }
+
+      it 'creates a new voice file' do
+        expect {
+          make_request(valid_voice_recording_params)
+        }.to change(Voicemail, :count).by(1)
+      end
+
+      it 'saves the URL of the voice recording' do
+        make_request(valid_voice_recording_params)
+        expect(Voicemail.last.url).to eq(recording_url)
+      end
+
+      it 'says that the message has been saved' do
+        make_request(valid_voice_recording_params)
+        expect(response_hash['Response']['Say']).to eq('Message saved.')
+      end
+
+      it 'redirects to leaving a voicemail' do
+        make_request(valid_voice_recording_params)
+        expect(response.body).to redirect_twilio_to('/prompt')
+      end
+    end
+
+    context 'invalid voicemail recording' do
+      let(:invalid_voice_recording_params) {
+        { 'RecordingDuration' => '2' }
+      }
+
+      it 'does not save the voice file' do
+        expect {
+          make_request(invalid_voice_recording_params)
+        }.to_not change(Voicemail, :count).by(1)
+      end
+
+      it 'sets the flag to false' do
+        make_request(invalid_voice_recording_params)
+        expect(@vm_saved).to be_false
+      end
+
+      it 'says only the direction to listen to other messages' do
+        make_request(invalid_voice_recording_params)
+        expect(response_hash['Response']['Say']).to eq("I'm sorry. That message was too short.")
+      end
+
+      it 'redirects to leaving a voicemail' do
+        make_request(invalid_voice_recording_params)
+        expect(response.body).to redirect_twilio_to(new_voicemail_path)
+      end
     end
   end
 end
