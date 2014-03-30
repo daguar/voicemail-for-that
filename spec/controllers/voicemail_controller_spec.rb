@@ -41,8 +41,8 @@ describe VoicemailController do
   end
 
   describe 'POST #router' do
-    def make_request
-      post :router
+    def make_request(params = {})
+      post :router, params
     end
 
     context 'no digits entered' do
@@ -52,10 +52,17 @@ describe VoicemailController do
         expect(response.body).to redirect_twilio_to('/prompt')
       end
     end
-    # => redirect back to prompt
 
-    # context 'user pressed 1'
+    context 'user pressed 1' do
     # => redirect to leaving a voicemail
+      before do
+        make_request({'Digits' => '1'})
+      end
+
+      it 'redirects to leaving a voicemail' do
+        expect(response.body).to redirect_twilio_to(new_voicemail_path)
+      end
+    end
 
     # context 'user pressed 2'
     # => redirect to voicemail playback
