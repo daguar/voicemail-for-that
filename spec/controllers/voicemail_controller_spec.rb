@@ -69,12 +69,13 @@ describe VoicemailController do
       end
 
       it 'redirects to listening to voicemails' do
-        expect(response.body).to redirect_twilio_to('/voicemails/random')
+        puts random_voicemail_path
+        expect(response.body).to redirect_twilio_to(random_voicemail_path)
       end
     end
   end
 
-  describe 'GET /voicemails/random' do
+  describe 'GET /voicemail/random' do
     before { get :random }
 
     it 'is successful' do
@@ -82,11 +83,21 @@ describe VoicemailController do
     end
   end
 
-  describe 'GET /voicemails/new' do
+  describe 'GET /voicemail/new' do
     # Say "leave a message at the beep", then record
+    before { get :new }
+
+    it 'is successful' do
+      expect(response).to be_successful
+    end
   end
 
   describe 'POST /voicemail/create' do
     # Save recording, say "message saved. playing back other voicemail"
+    before { post :create }
+
+    it 'is successful' do
+      expect(response).to be_successful
+    end
   end
 end

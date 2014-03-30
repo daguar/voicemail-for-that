@@ -8,6 +8,11 @@ class VoicemailController < ApplicationController
   end
 
   def new
+    render action: 'new.xml.builder', layout: false
+  end
+
+  def create
+    render action: 'create.xml.builder', layout: false
   end
 
   def random
