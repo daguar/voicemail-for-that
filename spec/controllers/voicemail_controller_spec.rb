@@ -54,7 +54,6 @@ describe VoicemailController do
     end
 
     context 'user pressed 1' do
-    # => redirect to leaving a voicemail
       before do
         make_request({'Digits' => '1'})
       end
@@ -64,7 +63,15 @@ describe VoicemailController do
       end
     end
 
-    # context 'user pressed 2'
+    context 'user pressed 2' do
     # => redirect to voicemail playback
+      before do
+        make_request({'Digits' => '2'})
+      end
+
+      it 'redirects to listening to voicemails' do
+        expect(response.body).to redirect_twilio_to(voicemails_path)
+      end
+    end
   end
 end
