@@ -16,6 +16,11 @@ class VoicemailController < ApplicationController
     end
   end
 
+  def show
+    @voicemail = Voicemail.find(params[:id])
+  end
+
   def random
+    @random_vm = Voicemail.random
   end
 end

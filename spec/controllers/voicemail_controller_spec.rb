@@ -74,14 +74,6 @@ describe VoicemailController do
     end
   end
 
-  describe 'GET /voicemail/random' do
-    before { get :random }
-
-    it 'is successful' do
-      expect(response).to be_successful
-    end
-  end
-
   describe 'GET /voicemail/new' do
     before { get :new }
 
@@ -186,6 +178,52 @@ describe VoicemailController do
         make_request(invalid_voice_recording_params)
         expect(response.body).to redirect_twilio_to(new_voicemail_path)
       end
+    end
+  end
+
+  describe 'GET /voicemail/random' do
+    before do
+      @voicemail_array = []
+      3.times do
+        @voicemail_array << create(:voicemail)
+      end
+
+      Voicemail.stub(:random) { @voicemail_array[1] }
+
+      get :random
+    end
+
+    it 'is successful' do
+      expect(response).to be_successful
+    end
+
+    it 'redirects to a random voicemail' do
+      expect(response.body).to redirect_twilio_to(voicemail_path(@voicemail_array[1]))
+    end
+  end
+
+  describe 'GET /voicemail/id' do
+    let(:target_voicemail) { create(:voicemail) }
+
+    let(:response_hash) { Hash.from_xml(response.body) }
+
+    before { get :show, id: target_voicemail.id }
+
+    it 'is successful' do
+      expect(response).to be_successful
+    end
+
+    it 'plays the url for the voicemail' do
+      expect(response.body).to play_twilio_url(target_voicemail.url)
+    end
+
+    it "says, 'playing next message'" do
+      say_text = response_hash['Response']['Say']
+      expect(say_text).to eq('End of message. Playing another message.')
+    end
+
+    it 'redirects to random' do
+      expect(response.body).to redirect_twilio_to('/voicemail/random')
     end
   end
 end
