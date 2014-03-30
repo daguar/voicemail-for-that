@@ -69,7 +69,6 @@ describe VoicemailController do
       end
 
       it 'redirects to listening to voicemails' do
-        puts random_voicemail_path
         expect(response.body).to redirect_twilio_to(random_voicemail_path)
       end
     end
