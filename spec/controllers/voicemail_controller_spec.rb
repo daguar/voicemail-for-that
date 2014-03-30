@@ -83,8 +83,10 @@ describe VoicemailController do
   end
 
   describe 'GET /voicemails/new' do
+    # Say "leave a message at the beep", then record
   end
 
   describe 'POST /voicemail/create' do
+    # Save recording, say "message saved. playing back other voicemail"
   end
 end
