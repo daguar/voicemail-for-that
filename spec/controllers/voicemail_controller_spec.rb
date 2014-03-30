@@ -51,6 +51,8 @@ describe VoicemailController do
       it 'redirects to prompt' do
         expect(response.body).to redirect_twilio_to('/prompt')
       end
+
+      # Would like test to check that this is a GET method
     end
 
     context 'user pressed 1' do

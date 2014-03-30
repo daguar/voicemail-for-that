@@ -1,1 +1,1 @@
-xml.Redirect voicemail_path(@random_vm)
+xml.Redirect(voicemail_path(@random_vm), method: 'GET')
