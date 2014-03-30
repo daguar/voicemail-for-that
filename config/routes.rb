@@ -3,7 +3,7 @@ VoicemailForThat::Application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   resources :voicemail
-  get '/voicemail/random' => 'voicemail#random', :as => :random_voicemail
+  get '/random' => 'voicemail#random', :as => :random_voicemail
   get '/prompt' => 'voicemail#prompt'
   post '/router' => 'voicemail#router'
 

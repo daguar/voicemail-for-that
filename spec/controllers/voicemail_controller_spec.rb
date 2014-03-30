@@ -183,7 +183,7 @@ describe VoicemailController do
     end
   end
 
-  describe 'GET /voicemail/random' do
+  describe 'GET /random' do
     before do
       @voicemail_array = []
       3.times do
@@ -225,7 +225,7 @@ describe VoicemailController do
     end
 
     it 'redirects to random' do
-      expect(response.body).to redirect_twilio_to('/voicemail/random')
+      expect(response.body).to redirect_twilio_to(random_voicemail_path)
     end
   end
 end
