@@ -83,11 +83,45 @@ describe VoicemailController do
   end
 
   describe 'GET /voicemail/new' do
-    # Say "leave a message at the beep", then record
     before { get :new }
+
+    let(:response_hash) { Hash.from_xml(response.body) }
+
+    let(:record_hash) { response_hash['Response']['Record'] }
 
     it 'is successful' do
       expect(response).to be_successful
+    end
+
+    it "says 'leave a message after the beep'" do
+      words_said_by_robot = response_hash['Response']['Say']
+      expect(words_said_by_robot).to eq('Leave a voice message after the beep. Press one when you are done recording.')
+    end
+
+    it 'records voice input' do
+      expect(response_hash['Response']).to have_key('Record')
+    end
+
+    describe 'recording option set' do
+      it 'issues a POST' do
+        expect(record_hash['method']).to eq('POST')
+      end
+
+      it 'sends to the voicemail creation URL' do
+        expect(record_hash['action']).to eq('/voicemail')
+      end
+
+      it 'times out after one minute' do
+        expect(record_hash['maxLength']).to eq('60')
+      end
+
+      it 'plays beep (default Twilio behavior)' do
+        expect(record_hash).not_to have_key('playBeep')
+      end
+
+      it 'finishes on the pressing of any key (default Twilio behavior)' do
+        expect(record_hash).not_to have_key('finishOnKey')
+      end
     end
   end
 
