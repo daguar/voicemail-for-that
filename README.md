@@ -38,7 +38,7 @@ This app runs on the excellent [Twilio](https://www.twilio.com/) telephony API s
 Here are the steps to set up Twilio:
 
 1. Buy a phone number
-2. Set the Voice Request URL for your phone number (found on Twilio's site at Account > Numbers, then clicking your phone number.) You want to set the Request URL to your application's URL with `/prompt` at the end. For example: `http://my-app-name.herokuapp.com/prompt`
+2. Set the Voice Request URL for your phone number (found on Twilio's site at Account > Numbers, then clicking your phone number.) You want to set the Request URL to your application's URL with `/prompt` at the end. For example: `http://my-app-name.herokuapp.com/prompt`. Be sure to select 'GET'.
 
 #### Twilio Cost Note
 
